@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 var c = require('./controller/');
+var urlRoutes = require('./route/user')
 app.listen(3000, function () {
     console.log('listening on 3000')
 })
@@ -15,3 +16,5 @@ app.post('/quotes',(req,res) => {
 })
 
 app.get('/test', c.UserController.getUser);
+// router
+app.use('/users', urlRoutes);
