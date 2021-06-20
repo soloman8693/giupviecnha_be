@@ -16,51 +16,106 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `customer`
+-- Table structure for table `customer`
 --
 
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customer` (
+  `customerId` int NOT NULL AUTO_INCREMENT,
+  `userId` int DEFAULT NULL,
+  PRIMARY KEY (`customerId`),
+  KEY `customer_user_idx` (`userId`),
+  CONSTRAINT `customer_user` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dangtintimviec`
+-- Table structure for table `dangtintimviec`
 --
 
-LOCK TABLES `dangtintimviec` WRITE;
-/*!40000 ALTER TABLE `dangtintimviec` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dangtintimviec` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dangtintimviec`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dangtintimviec` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tiltle` varchar(45) DEFAULT NULL,
+  `customerid` int DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `modifiedDate` datetime DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `image` varchar(200) DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `news_customer_idx` (`customerid`),
+  CONSTRAINT `news_customer` FOREIGN KEY (`customerid`) REFERENCES `customer` (`customerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `employee`
+-- Table structure for table `employee`
 --
 
-LOCK TABLES `employee` WRITE;
-/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,1,NULL,'5-12',NULL,'SG',3,3),(2,2,NULL,'13-16',NULL,'HN',90,5),(3,1,NULL,NULL,NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `employee` (
+  `employeeId` int NOT NULL AUTO_INCREMENT,
+  `userId` int DEFAULT NULL,
+  `description` varchar(450) DEFAULT NULL,
+  `workingTime` varchar(45) DEFAULT NULL,
+  `image` varchar(450) DEFAULT NULL,
+  `hometown` varchar(45) DEFAULT NULL,
+  `solanthue` int DEFAULT NULL,
+  `rate` int DEFAULT NULL,
+  PRIMARY KEY (`employeeId`),
+  KEY `employee_user_idx` (`userId`),
+  CONSTRAINT `employee_user` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order`
+-- Table structure for table `order`
 --
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order` (
+  `orderId` int NOT NULL AUTO_INCREMENT,
+  `customerId` int DEFAULT NULL,
+  `employeeId` int DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `paymentMethod` varchar(45) DEFAULT NULL,
+  `supporter` int DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`orderId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Table structure for table `user`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Hoa',NULL,NULL,NULL,NULL,NULL),(2,'vinh',NULL,NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `userId` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `age` int DEFAULT NULL,
+  `description` varchar(400) DEFAULT NULL,
+  `role` varchar(45) DEFAULT NULL,
+  `usergroup` int DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `userId_UNIQUE` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -71,4 +126,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-20 21:32:25
+-- Dump completed on 2021-06-20 21:34:26
